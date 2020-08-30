@@ -1,32 +1,33 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <router-view />
+    <div class="footer-wrapper" v-if="$route.meta.showFooter">
+      <footer-guide />
     </div>
-    <router-view/>
+    
   </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import FooterGuide from 'components/content/FooterGuide/FooterGuide'
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+export default {
+  name: 'app',
+  components: {
+    FooterGuide
   }
 }
+</script>
+
+<style lang="less">
+  #app {
+    width: 100%;
+
+    .footer-wrapper {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      border-top: #e4e4e4 1px solid;
+    }
+  }
 </style>
