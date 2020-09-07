@@ -2,12 +2,12 @@
   包含n个接口请求函数(函数的返回值: promise对象)的模块
 */
 
-import request from './request'
+import { request, requestMock } from './request'
 
 // 1、根据经纬度获取位置详情
 export function reqAddress(geohash) {
   return request({
-    url: `/position/${geohash}`
+    url: `/position/${geohash}`,
   })
 }
 // 2、获取食品分类列表
@@ -36,14 +36,15 @@ export function reqSearchShop(geohash, keyword) {
     }
   })
 }
-// 5、获取一次性验证码
-export function reqVerifyCode() {
-  return request({
-    url: '/captcha'
-  })
-}
+// 5、获取一次性图形验证码
+//    已经使用event发请求了
+// export function reqVerifyCode() {
+//   return request({
+//     url: '/captcha'
+//   })
+// }
 // 6、用户名密码登陆
-export function reqSearchShop(name, pwd, captcha) {
+export function reqPwdLogin(name, pwd, captcha) {
   return request({
     url: '/login_pwd',
     method: 'post',
@@ -74,7 +75,7 @@ export function reqSmsLogin(phone, code) {
     }
   })
 }
-// 9、根据会话获取用户信息
+// 9、根据会话(session)获取用户信息
 export function reqUserInfo() {
   return request({
     url: '/userinfo'
@@ -92,7 +93,7 @@ export function reqLogout() {
  * 获取商家信息
  */
 export function reqShopInfo() {
-  return request({
+  return requestMock({
     url: '/info'
   })
 }
@@ -101,7 +102,7 @@ export function reqShopInfo() {
  * 获取商家评价数组
  */
 export function reqShopRatings() {
-  return request({
+  return requestMock({
     url: '/ratings'
   })
 }
@@ -110,7 +111,7 @@ export function reqShopRatings() {
  * 获取商家商品数组
  */
 export function reqShopGoods() {
-  return request({
+  return requestMock({
     url: '/goods'
   })
 }

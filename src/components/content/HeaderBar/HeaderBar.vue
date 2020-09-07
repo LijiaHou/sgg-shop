@@ -1,15 +1,19 @@
 <template>
   <div id="HeaderBar">
     <nav-bar>
-      <i v-if="sides" class="left iconfont icon-sousuo" slot="left" ></i>
+      <router-link class="left" to="/search" slot="left"><i v-if="sides" class="iconfont icon-sousuo"></i></router-link>
       <span class="center ellipsis" slot="center">{{content}}</span>
-      <span v-if="sides" class="right" slot="right">登录|注册</span>
+      <router-link  v-if="sides" class="right" slot="right" :to="userInfo._id ? '/userinfo' : '/login'">
+        <span v-if="!userInfo._id">登录|注册</span>
+        <i class="iconfont icon-person" v-else></i>
+      </router-link >
     </nav-bar>
   </div>
 </template>
 
 <script>
 import NavBar from 'components/common/NavBar/NavBar'
+import {mapState} from 'vuex'
 
 export default {
   name : 'HeaderBar',
@@ -25,7 +29,10 @@ export default {
       type : Boolean,
       default : false
     }
-  }
+  },
+  computed: {
+    ...mapState(['userInfo'])
+  },
 }
 </script>
 
@@ -34,22 +41,37 @@ export default {
     width: 100%;
     background-color: #02a774;
     color: #fff;
+    a {
+      text-decoration: none;
+      color: currentColor
+    }
 
     .left {
       width: 100%;
-      font-size: 25px;
-      position: relative;
-      right: 5px;
+      text-align: left;
+
+      & i {
+        font-size: 25px;
+        margin-left: 15px;
+      }
     }
     .right {
       width: 100%;
-      font-size: 14px;
+      text-align: right;
+
+      & span {
+        margin-right: 15px;
+        font-size: 14px;
+      }
+      & i {
+        font-size: 20px;
+        margin-right: 15px;
+      }
     }
     .center {
-      width: 100%;
+      width: 90%;
       font-size: 20px;
-      display: block;
-      width: 170px;
+      display: inline-block;
     }
   }
   

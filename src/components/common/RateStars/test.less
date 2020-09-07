@@ -1,0 +1,25 @@
+
+.template {
+  border: aqua 1px double;
+  .a {
+    background-color: rgb(85, 197, 11);
+
+      .z {
+        font-size: large;
+      }
+  }
+  .b {
+    width: 100px;
+  }
+}
+
+.c {
+  padding-block: 2;
+  // 就把选中的元素的本身样式拿过来，不包含子元素的
+  // &:extend(.template .a);
+  .template();
+
+  j {
+    transition-duration: inherit;
+  }
+}

@@ -26,11 +26,11 @@ export default {
   line-height: 44px;
 }
 .left, .right {
-  width: 80px;
+  width: 20%;
   text-align: center;
 }
 .center {
-  width: 200px;
+  width: 100%;
   /* 相当于felx-grow */
   text-align: center;
 }

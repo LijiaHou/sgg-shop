@@ -1,0 +1,22 @@
+{
+  "goods": [
+    {
+      "name": "优惠",
+      "foods": [
+        {
+          "name": "南瓜粥",
+          "price": 9,
+          "descripe": "甜粥",
+          "rating": 1
+        }
+      ]
+    }
+  ],
+  "rating": [
+
+  ],
+  "info": {
+    
+  }
+
+}

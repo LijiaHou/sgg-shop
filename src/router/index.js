@@ -44,7 +44,33 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('views/Login/Login')
-  }
+  },
+  {
+    path: '/shop',
+    name: 'Shop',
+    component: () => import('views/Shop/Shop'),
+    children: [
+      {
+        path: '/shop',
+        redirect : '/shop/shopgoods'
+      },
+      {
+        path: '/shop/shopgoods',
+        name: 'ShopGoods',
+        component: () => import('views/Shop/ShopGoods/ShopGoods')
+      },
+      {
+        path: '/shop/shoprating',
+        name: 'ShopRating',
+        component: () => import('views/Shop/ShopRating/ShopRating')
+      },
+      {
+        path: '/shop/shopinfos',
+        name: 'ShopInfos',
+        component: () => import('views/Shop/ShopInfos/ShopInfos')
+      },
+    ]
+  },
 ]
 
 const router = new VueRouter({

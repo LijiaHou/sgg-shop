@@ -1,0 +1,28 @@
+.template {
+  border: aqua 1px double;
+}
+.template .a {
+  background-color: #55c50b;
+}
+.template .a .z {
+  font-size: large;
+}
+.template .b {
+  width: 100px;
+}
+.c {
+  padding-block: 2;
+  border: aqua 1px double;
+}
+.c .a {
+  background-color: #55c50b;
+}
+.c .a .z {
+  font-size: large;
+}
+.c .b {
+  width: 100px;
+}
+.c j {
+  transition-duration: inherit;
+}

@@ -1,7 +1,7 @@
 <template>
   <div id="Profile">
     <div class="profile-header-wrapper"><header-bar content="我的"></header-bar></div>
-    <router-link class="profile-login-wrapper" to="/login"><login-bar></login-bar></router-link>
+    <router-link class="profile-login-wrapper" :to="userInfo._id ? '/userinfo' : '/login'"><login-bar></login-bar></router-link>
     <div class="profile-value-display">
       <a href="javascript:;"><square-info-item color="#f90" unit="元" title="我的余额" :fixed="2"></square-info-item></a>
       <a href="javascript:;"><square-info-item color="#ff5f3e" unit="个" title="我的优惠"></square-info-item></a>
@@ -15,6 +15,10 @@
     <div class="profile-serve">
       <a href="javascript:;"><item-link-bar brand="icon-fuwu" color="#02a774" title="服务中心"></item-link-bar></a>
     </div>
+
+    <div class="profile-logout" v-if="userInfo._id">
+      <mt-button type="danger" size="large" @click="logout">退出登录</mt-button>
+    </div>
   </div>
 </template>
 
@@ -23,6 +27,8 @@ import HeaderBar from 'components/content/HeaderBar/HeaderBar'
 import LoginBar from 'components/content/LoginBar/LoginBar'
 import SquareInfoItem from 'components/common/SquareInfoItem/SquareInfoItem'
 import ItemLinkBar from 'components/common/ItemLinkBar/ItemLinkBar'
+import {mapState} from 'vuex'
+import { MessageBox, Toast } from 'mint-ui'
 
 export default {
   name : "Profile",
@@ -31,7 +37,23 @@ export default {
     LoginBar,
     SquareInfoItem,
     ItemLinkBar
-  }
+  },
+  computed: {
+    ...mapState(['userInfo'])
+  },
+  methods: {
+    logout() {
+      MessageBox.confirm('再待会呗?').then(action => {
+        console.log('退出登录')
+        this.$store.dispatch('logOut')
+        Toast({
+          message: '已退出登录',
+          position: 'middle',
+          duration: 2000
+        })
+      })
+    }
+  },
 }
 </script>
 
@@ -72,6 +94,9 @@ export default {
     }
     .profile-serve {
       border-top: #e9e9e9 solid 2px;
+    }
+    .profile-logout {
+      margin-top: 10px;
     }
   }
 </style>

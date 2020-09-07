@@ -15,7 +15,8 @@
       </div>
       <div class="ShopItem-info-evaluation">
         <div class="ShopItem-info-stars">
-          <span class="star-item" v-for="(item, index) in gradeToList" :class="item" :key="index"></span>
+          <!-- <span class="star-item" v-for="(item, index) in gradeToList" :class="item" :key="index"></span> -->
+          <rate-stars :grade="grade" size="24"></rate-stars>
           <span class="star-item-grade">{{grade.toFixed(2)}}</span>
           <div class="info-sales">月售<b>{{salesVolume}}</b>单</div>
         </div>
@@ -33,8 +34,13 @@
 </template>
 
 <script>
+import RateStars from '../RateStars/RateStars'
+
 export default {
   name: 'ShopItem',
+  components : {
+    RateStars
+  },
   props: {
     shopName: {
       type: String,
@@ -52,7 +58,10 @@ export default {
       type: Number,
       default: 5
     },
-    imgLink: String,
+    imgLink: {
+      type: String,
+      default: './shop/1.jpg'
+    },
     grade: {
       type: Number,
       default: 5.0,
@@ -61,30 +70,30 @@ export default {
       }
     }
   },
-  computed: {
-    gradeToList() {
-      let arr = []
-      let level = this.grade
-      while(level--){
-        if(level > 0) {
-          arr.push('on')
-        }else if(level === 0) {
-          arr.push('on')
-          break
-        }else {
-          arr.push('half')
-          break
-        }
-      }
-      arr.length = 5
-      for(let i=4; i>=0; i--){
-        if(arr[i] == undefined){
-          arr[i] = 'off'
-        }
-      }
-      return arr
-    }
-  },
+  // computed: {
+  //   gradeToList() {
+  //     let arr = []
+  //     let level = this.grade
+  //     while(level--){
+  //       if(level > 0) {
+  //         arr.push('on')
+  //       }else if(level === 0) {
+  //         arr.push('on')
+  //         break
+  //       }else {
+  //         arr.push('half')
+  //         break
+  //       }
+  //     }
+  //     arr.length = 5
+  //     for(let i=4; i>=0; i--){
+  //       if(arr[i] == undefined){
+  //         arr[i] = 'off'
+  //       }
+  //     }
+  //     return arr
+  //   }
+  // },
 }
 </script>
 
@@ -154,14 +163,14 @@ export default {
           justify-content: flex-start;
           align-items: flex-end;
 
-          .star-item {
-            display: block;
-            width: 10px;
-            height: 10px;
-            background-size: contain;
-            margin-right: 3px;
+          // .star-item {
+          //   display: block;
+          //   width: 10px;
+          //   height: 10px;
+          //   background-size: contain;
+          //   margin-right: 3px;
 
-          }
+          // }
           .star-item-grade {
             display: block;
             font-size: 10px;
@@ -195,16 +204,5 @@ export default {
         }
       }
     }
-
-    .star-item.on {
-      background-image: url("/stars/star24_on@2x.png");
-    }
-    .star-item.off {
-      background-image: url("/stars/star24_off@2x.png");
-    }
-    .star-item.half {
-      background-image: url("/stars/star24_half@2x.png");
-    }
-
   }
 </style>

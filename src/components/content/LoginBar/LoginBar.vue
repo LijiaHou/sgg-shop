@@ -3,10 +3,10 @@
     <div class="login-bar-left">
       <i class="iconfont icon-person"></i>
       <div class="bar-login">
-        <h3>登录/注册</h3>
+        <h3 v-if="!userInfo.phone">{{userInfo._id || '登录/注册'}}</h3>
         <div class="login-bar-mobile">
           <i class="iconfont icon-shouji icon-mobile"></i>
-          <span>暂无绑定手机号</span>
+          <span>{{userInfo.phone || '暂无绑定手机号'}}</span>
         </div>
       </div>
     </div>
@@ -17,8 +17,13 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
-  name: 'LoginBar'
+  name: 'LoginBar',
+  computed: {
+    ...mapState(['userInfo'])
+  },
 }
 </script>
 
@@ -33,23 +38,26 @@ export default {
 
     .login-bar-left {
       display: flex;
+      // background-color: pink;
 
       .bar-login {
+        // background-color: red;
         margin-left: 15px;
         display: flex;
         flex-flow: column;
-        justify-content: flex-end;
+        justify-content: space-evenly;
 
         h3 {
           display: inline;
           font-size: 18px;
           font-weight: bolder;
+          padding-top: 10px;
+          padding-bottom: 5px;
         }
         .login-bar-mobile {
           position: relative;
           right: 15px;
           margin-bottom: -3px;
-          margin-top: 3px;
 
           i {
             vertical-align: middle;

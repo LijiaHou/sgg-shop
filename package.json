@@ -4,11 +4,17 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@better-scroll/core": "^2.0.2",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "mint-ui": "^2.2.13",
+    "mockjs": "^1.0.1-beta3",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^3.0.2",
     "swiper": "^5.4.0",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.0",
@@ -20,6 +26,7 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
+    "babel-plugin-component": "^1.1.1",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "vue-template-compiler": "^2.6.11"
