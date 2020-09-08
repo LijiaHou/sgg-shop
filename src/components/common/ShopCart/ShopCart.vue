@@ -1,24 +1,28 @@
 <template>
   <div>
-    <div class="cart-list-wrapper" v-show="cartListShowed">
-      <div class="list-head">
-        <h4>购物车</h4>
-        <span @click="clearCart">清空</span>
+    <transition name="slide">
+      <div class="cart-list-wrapper" v-show="cartListShowed">
+        <div class="list-head">
+          <h4>购物车</h4>
+          <span @click="clearCart">清空</span>
+        </div>
+        <div class="cart-list-content">
+          <ul class="cart-list">
+            <li v-for="(food, index) in cartFoods" :key="index">
+              <span>{{food.name}}</span>
+              <div class="control-wrapper">
+                <span>￥{{food.price}}</span>
+                <cart-control :food="food" />
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="cart-list-content">
-        <ul class="cart-list">
-          <li v-for="(food, index) in cartFoods" :key="index">
-            <span>{{food.name}}</span>
-            <div class="control-wrapper">
-              <span>￥{{food.price}}</span>
-              <cart-control :food="food" />
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="cart-list-mask" v-show="cartListShowed" @click="toggleCartList"></div>
+    </transition>
+    
+    <transition name="slide">
+      <div class="cart-list-mask" v-show="cartListShowed" @click="toggleCartList"></div>
+    </transition>
 
     <div id="ShopCart">
       <div class="cart-left" @click="toggleCartList">
@@ -31,7 +35,7 @@
           <span>另需配送费￥{{info.deliveryPrice}}元</span>
         </div>
       </div>
-      <div class="cart-right" :class="payClass">
+      <div class="cart-right" :class="payClass" @click="checkOut">
         <span>{{payText}}</span>
       </div>
     </div>
@@ -43,6 +47,7 @@
 import { mapState, mapGetters} from 'vuex'
 import CartControl from 'components/common/CartControl/CartControl'
 import BScroll from '@better-scroll/core'
+import { MessageBox } from 'mint-ui'
 
 export default {
   name: 'ShopCart',
@@ -117,15 +122,36 @@ export default {
     },
 
     clearCart() {
-      this.$store.commit('clear_cart')
+      MessageBox.confirm('确认要清空吗?').then(action => {
+        this.$store.commit('clear_cart')
+      }, ()=>{})
     },
+
+    checkOut() {
+      if(this.payClass === "enough"){
+        MessageBox({
+          title: '支付',
+          message: `您一共需要支付${this.totalPrice}元`,
+          confirmButtonText: `小意思~`,
+          confirmButtonClass:'confirmButton'
+        })
+      }
+    }
   },
   
 }
 </script>
 
 <style lang="less" scoped>
-
+  .confirmButton {
+    background: #d9534f !important;
+    width: 1.6rem !important;
+    height: .6rem;
+    color: #fff !important;
+    border-radius: .05rem;
+    border: none;
+    margin: .2rem !important;
+  }
   .cart-list-wrapper {
     width: 100%;
     position: relative;
@@ -135,6 +161,13 @@ export default {
     background-color: #fff;
     z-index: 1;
 
+    &.slide-enter, &.slide-leave-to {
+      transform: translateY(240px);
+      opacity: 0;
+    }
+    &.slide-enter-active, &.slide-leave-active {
+      transition: all 0.3s;
+    }
     .list-head {
       height: 40px;
       display: flex;
@@ -188,7 +221,14 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(40, 40, 40, 0.5);
+    background-color: rgba(27, 59, 34, 0.5);
+
+    &.slide-enter, &.slide-leave-to {
+      opacity: 0;
+    }
+    &.slide-enter-active, &.slide-leave-active {
+      transition: all 0.3s;
+    }
   }
 
   #ShopCart {
